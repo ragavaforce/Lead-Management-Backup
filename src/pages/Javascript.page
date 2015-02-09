@@ -1,0 +1,145 @@
+<apex:page Controller="DataTableExampleController" readOnly="true">
+    <head>
+        <apex:includescript value="//code.jquery.com/jquery-1.11.1.min.js" / >
+        <apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
+        <apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
+        <script>
+            j$ = jQuery.noConflict();
+            j$(document).ready( function () {
+                var contactTable = j$('[id$="contacttable"]').DataTable({
+                    
+                });
+            });
+        </script>
+    </head>
+    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+<!-----------------------Autocomplete-------------------------------------->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ <script>
+ $.noConflict();
+ jQuery(document).ready(function(){
+ jQuery.extend(jQuery.expr[":"], {
+"containsIN": function(elem, i, match, array) {
+return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+}
+});
+ 
+ 
+ jQuery(document).on("keyup",".search",function(){
+
+
+  var searchterm = jQuery(this).val();
+
+  if(searchterm.length > 0) {
+var lmatch=jQuery('.list tbody tr').text();
+//alert( jQuery('.list tbody tr td .ratingdata:containsIN("' + searchterm + '")').text());
+
+   var match = jQuery('.list tbody tr td .ratingdata:containsIN("' + searchterm + '")');
+
+   var nomatch = jQuery('.list tbody tr .ratingdata:not(:containsIN("' + searchterm + '"))').parent();
+   
+
+   match.addClass('selected');
+
+   nomatch.css("display", "none");
+
+  } else {
+
+   jQuery('.list tbody tr').css("display", "");
+
+   jQuery('.list tbody tr').removeClass('selected');
+
+  }
+
+});
+
+});
+ 
+</script>
+
+<style>
+.cselected
+{
+background:red;
+}
+.hselected
+{
+display:none;
+}
+body .bPageBlock .pbBody .labelCol{
+text-align: left;
+}
+body,td{
+font-family: 'Open Sans', sans-serif;
+color:black;
+}
+body .pbBody table.list tr td {
+color: #000;
+font-size: 1.1em;
+}
+.serchfld
+{
+width: 550px;
+border-radius: 8px;
+height: 20px;
+border: 1px solid #BBB6B6;
+margin-bottom: 10px;
+background-image: url(https://c.ap1.visual.force.com/resource/1418208486000/srch);
+background-repeat: no-repeat;
+background-position: 270px -1px;
+}
+</style>
+
+
+  <apex:form >
+  
+  <br/>
+       <span style="font-size: 1.2em;margin: 0 1% 0 1%;"> Lead Details:</span>
+       
+       <apex:inputtext value="{!rec}" styleClass="search serchfld" style="width:300px;" html-placeholder="Search"/>
+      <!-- <apex:CommandButton value="Search" action="{!searchcon}" style="color: Green; margin: 0 0 0 4.8px;"/> -->
+     </apex:form>
+     
+ 
+        
+        
+        <style>
+        body .bPageBlock .pbBody .pbSubheader {
+border-width: 2px 0 0;
+border-style: solid;
+color: #27282e;
+padding: 4px 3px;
+background-color: rgb(0, 136, 204);
+}
+        </style>
+    <body>
+        <table id="contacttable" class="display">
+            <thead>
+                <tr>
+                    
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Phone</th>
+                 
+                   
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!contactList}" var="contact">
+                    <tr>
+                        <td>{!Contact.company}</td>
+                        <td>{!contact.Name}</td>
+                        <td>{!contact.Phone}</td>
+                       <td>{!contact.email}</td>
+                       <td>{!contact.Country__c}</td>
+                         <td>{!contact.Website}</td>
+                        <td>{!contact.Rating}</td>
+                        <td>{!contact.createddate}</td>
+                       
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+    </body>
+</apex:page>

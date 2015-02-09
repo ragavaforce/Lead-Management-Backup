@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Automated email template for Lead, if the Lead Rating is HOT</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>UpdateonLeadRating</name>
+    <style>none</style>
+    <subject>Alert - Lead {!Lead.Name} - Now a {!Lead.Rating} Lead</subject>
+    <textOnly>Dear All,  You have a new {!Lead.Rating} lead! Please take a look at the details below and kindly follow-up.  Please find the lead information :  Name: {!Lead.Name}  Phone: {!Lead.Phone}  Email: {!Lead.Email}  Company: {!Lead.Company}  You can click on the link below for more information:  https://c.ap1.visual.force.com/apex/LeadmanagementDetailpage?id=00Q9000000cCrv4EAC&amp;sfdc.override=1  Thank You</textOnly>
+    <type>custom</type>
+</EmailTemplate>

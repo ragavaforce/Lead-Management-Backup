@@ -1,0 +1,53 @@
+<apex:page sidebar="false" showHeader="false" controller="SendingMailFunctionalityController">
+
+<style>
+.btn {
+background: rgb(32, 123, 150)!important;
+background-image: none !important;
+border: none !important;
+color: #fff !important;
+font-family: 'Open Sans', sans-serif !important;
+font-size: 1em !important;
+font-weight: normal!important;
+}
+.pbBody
+{
+padding:10px;
+border:1px solid black;
+width: 425px;
+}
+.subjectinput
+{
+height:14px;
+width:340px;
+}
+.data2Col  div
+{
+width:342px;
+}
+</style>
+
+    <apex:form >
+        
+        <apex:pageBlock >
+        
+            <apex:pageBlockSection columns="1">
+            
+             <apex:pageBlockSectionItem ><apex:outputLabel >Subject</apex:outputLabel><apex:inputField value="{!Contactnew.Subject__c}" styleClass="subjectinput"/></apex:pageBlockSectionItem><br/>
+             <apex:pageBlockSectionItem ><apex:outputLabel >Body</apex:outputLabel><apex:inputField value="{!Contactnew.Body__c}" /></apex:pageBlockSectionItem>
+            
+            
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons >
+            
+                <apex:commandButton value="Send an Email" action="{!SendAnEmail}"  styleClass="closebtn" oncomplete="window.close();"/>
+            
+            </apex:pageBlockButtons>
+        
+        </apex:pageBlock>
+    
+    
+    </apex:form>
+  
+</apex:page>

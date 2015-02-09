@@ -1,0 +1,268 @@
+<apex:page standardController="lead" extensions="LeadSearch1" sidebar="false" showHeader="true" recordSetVar="leads">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+<!-----------------------Autocomplete-------------------------------------->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ <script>
+ $.noConflict();
+ jQuery(document).ready(function(){
+ jQuery(".linkclass span a").each(function(){
+ jQuery(this).attr("href","#");
+  jQuery(this).attr("style","text-decoration:none;cursor:text;");
+ })
+ jQuery.extend(jQuery.expr[":"], {
+"containsIN": function(elem, i, match, array) {
+return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+}
+});
+
+ jQuery(document).on("keyup",".search",function(){
+
+
+  var searchterm = jQuery(this).val();
+
+  if(searchterm.length > 0) {
+var lmatch=jQuery('.list tbody tr').text();
+
+   var match = jQuery('.list tbody tr:containsIN("' + searchterm + '")');
+
+   var nomatch = jQuery('.list tbody tr:not(:containsIN("' + searchterm + '"))');
+
+   match.addClass('selected');
+
+   nomatch.css("display", "none");
+
+  } else {
+
+   jQuery('.list tbody tr').css("display", "");
+
+   jQuery('.list tbody tr').removeClass('selected');
+
+  }
+
+});
+
+});
+ 
+</script>
+
+
+
+    <!----------------------Styles------------------------->
+    
+    <style>
+    body .pbBody table.list tr td{text-align:center !important;}
+    body .pbBody table.list tr.headerRow th{
+    text-align:center !important;
+    }
+body .bPageBlock .pbBody .labelCol{
+text-align: left;
+}
+body,td{
+font-family: 'Open Sans', sans-serif;
+color:black;
+}
+body .pbBody table.list tr td {
+color: #000;
+font-size: 1.1em;
+}
+.serchfld
+{
+width: 550px;
+border-radius: 8px;
+height: 20px;
+border: 1px solid #BBB6B6;
+margin-bottom: 10px;
+background-image: url(https://c.ap1.visual.force.com/resource/1418366826000/SearchIcon);
+background-repeat: no-repeat;
+background-position: 270px -1px;
+}
+</style>
+  <style>
+        body .bPageBlock .pbBody .pbSubheader {
+border-width: 2px 0 0;
+border-style: solid;
+color: #27282e;
+padding: 4px 3px;
+background-color: rgb(0, 136, 204);
+}
+        </style>
+        
+        
+         <!---------------------------css for Popup------------------------------------->
+         <style type="text/css">
+         .btnDisabled{background:#7f7f7f !important;color:#fff !important;}
+         .btn{
+color: white !important;
+background: rgb(49,43,103) !important;
+text-decoration: none;
+text-shadow: none;
+font-weight: initial;
+border-radius: 8%;
+padding: 0.5% 1% 0.5% 1%;
+font-family: 'Open Sans', sans-serif;}
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 35%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/
+            width: 50%;
+            margin-left: -200px;
+            top:70px;
+        }
+        .popupBackground{
+          background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQIKv5BycnpdqF7Zv6zEKc7Hfpi-jZVBH-YEg708wNuds0GeuWR7YzlDfpI");
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+            position: fixed;
+        }
+
+    </style>
+    
+    
+        <!----lead Tab color------------------------------->
+        <style>
+        .zen .zen-tabMenu .zen-active {
+-moz-border-radius-topleft: 7px;
+-moz-border-radius-topright: 7px;
+border-top-left-radius: 7px;
+border-top-right-radius: 7px;
+-moz-box-shadow: 3px 0 5px -3px #999,-3px 0 5px -3px #999;
+-webkit-box-shadow: 3px 0 5px -3px #999,-3px 0 5px -3px #999;
+box-shadow: 3px 0 5px -3px #999,-3px 0 5px -3px #999;
+background-image: -moz-linear-gradient(rgba(255,255,255,.50),rgba(255,255,255,0) 12px);
+background-image: -webkit-linear-gradient(rgba(255,255,255,.50),rgba(255,255,255,0) 12px);
+background-image: -ms-linear-gradient(rgba(255,255,255,.50),rgba(255,255,255,0) 12px);
+background: rgb(49,43,103);
+}
+</style>
+
+
+    <style>
+.leadTab .brdPalette {
+border-top-color:rgb(49,43,103);
+}
+
+
+body input.btn, body input.btnDisabled, body input.btnCancel {
+padding: 7px 3px;
+}
+
+.leadTab .secondaryPalette, .individualPalette .leadBlock .secondaryPalette {
+background-color: #FFFFFF;
+border-color: rgb(49,43,103);
+}
+</style>
+    
+    
+    
+
+  <apex:form >
+  
+  <br/>
+       <span style="font-size: 1.2em;margin: 0 1% 0 1%;"> Lead Search:</span>
+       
+       <apex:inputtext value="{!rec}" styleClass="search serchfld" style="width:300px;" html-placeholder="Search"/>
+      <!-- <apex:CommandButton value="Search" action="{!searchcon}" style="color: Green; margin: 0 0 0 4.8px;"/> -->
+     
+        
+        <!-----------------------------Popup ------------------------------->
+      <apex:commandButton value="Create New Lead" action="{!showPopup}" rerender="tstpopup" style="margin: 0 0 0 5%;
+color: white;background:rgb(49,43,103);text-decoration: none;text-shadow: none;font-weight: initial;border-radius: 8%;padding: 0.5% 1% 0.5% 1%;font-family: 'Open Sans', sans-serif;"/>
+        <apex:outputPanel id="tstpopup">
+         
+        
+         
+      
+     
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}" >
+            <apex:pageBlock title="New Lead">
+            
+            
+            <apex:pageBlockSection >
+         
+   <!--   <apex:pageBlockSection title="Information" > -->
+          
+          <apex:inputField value="{!newLead .FirstName}" />
+          <apex:inputField value="{!newLead .LastName}" />
+          <apex:inputField value="{!newLead .Company}" required="true"/>
+          <apex:inputField value="{!newLead .Email}"/>
+          <apex:inputField value="{!newLead .Phone}"/> 
+          <apex:inputField value="{!newLead .Industry__c}"/>
+          <apex:inputField value="{!newLead .LeadType__c}"/> 
+          
+      
+            
+            <apex:inputField value="{!newLead .Website}"/>
+            <apex:inputField value="{!newLead .region__c}"/>
+              <apex:inputField value="{!newLead .Status}" / >
+               
+              <apex:inputField value="{!newLead .LinkedinLink__c}"/>
+              <apex:inputField value="{!newLead .Rating}"/>
+               <apex:inputField value="{!newLead .Country__c}"/>
+               
+              <apex:inputField value="{!newLead .City__c}"/>
+               <apex:inputField value="{!newLead .Company_Address__c}"/>
+             <!-- <apex:inputField value="{!newLead .created}"/>--->
+              
+              
+   <!--   </apex:pageBlockSection> -->
+             
+            </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+                 <center> <apex:commandButton value="Save" action="{!saveRecord}" style="color: white;background:rgb(49,43,103);text-decoration: none;text-shadow: none;font-weight: initial;border-radius: 8%;padding: 0.5% 1% 0.5% 1%;font-family: 'Open Sans', sans-serif;"/>
+            <apex:commandButton value="Cancel" action="{!closePopup}" rerender="tstpopup" immediate="true" style="color: white;background:rgb(49,43,103);text-decoration: none;text-shadow: none;font-weight: initial;border-radius: 8%;padding: 0.5% 1% 0.5% 1%;font-family: 'Open Sans', sans-serif;"/></center>
+                <!--<input type="button" class="leadBlock"/>-->
+                
+            </apex:outputPanel>
+        </apex:outputPanel>
+        
+        <!---------------------------css for Popup------------------------------------->
+        
+        <!------------------------------------Lead List Details ------------------------------->
+   <apex:outputPanel id="op">
+        <apex:pageblock >
+            <apex:pageblocktable value="{!cons}" var="a">
+          
+             <apex:column >
+           <apex:commandLink action="/{!a.id}/d">
+            
+           <!-- <apex:commandLink action="{!detailpage}"> -->
+      <img src="https://c.cs5.content.force.com/servlet/servlet.ImageServer?id=015O0000000BDgQ&oid=00DO00000050hS1&lastMod=1418989254000" style="width: 31px;" title="Click here for viewing the lead detail page"/></apex:commandlink>
+           
+            </apex:column>
+                <apex:column value="{!a.Company}" style="padding: 0 0 0 1%;"/>
+                 <apex:column value="{!a.name}"/>
+                 <apex:column value="{!a.Phone}"/>
+                  <apex:column value="{!a.Title}"/>
+                   <apex:column value="{!a.Email}" styleClass="linkclass"/>
+                  <apex:column value="{!a.Country__c}"/>
+                  <apex:column value="{!a.Rating}"/>
+                
+                <apex:column value="{!a.createddate}"/>
+                <apex:column value="{!a.ownerid}"/>
+                   
+            </apex:pageblocktable>
+            </apex:pageblock>
+            
+      <!-- **********************Pagination********************* 
+      <a href="https://ap1.salesforce.com/ui/massmail/MassMailStageManager?setupid=MassMailFilter&ftype=L&wizardRetUrl=%2F00Q%2Fo">MassEmails</a>-->
+  
+ 
+</apex:outputPanel>
+    </apex:form>
+</apex:page>

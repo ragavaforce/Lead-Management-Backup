@@ -1,0 +1,14 @@
+<apex:page standardController="Dashboard" sidebar="false" showHeader="false"><br/><br/>
+    <center><h3>More Hot leads this Week (Appreciation)</h3></center>
+    <style>
+    body .x-btn button, body .btn, body .btnImportant, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton, body .menuButton .menuButtonMenu a, body .menuButton .menuButtonMenu input.theOption, h1, h2, h3, h4, h5, h6 {
+font-family: Arial,Helvetica,sans-serif;
+font-size: bold;
+font-size: 18px;
+font-family: verdana;
+text-align: center;
+color: orange;
+}
+    </style>
+<iframe src="https://ap1.salesforce.com/01Z90000000q4QQ?isdtp=nv" width="100%" height="1000px"></iframe>
+</apex:page>

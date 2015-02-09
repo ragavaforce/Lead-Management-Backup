@@ -1,0 +1,89 @@
+<apex:page standardController="Lead" showHeader="true" tabStyle="Lead" sidebar="false">
+
+      <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+<style>
+
+body,td{
+font-family: 'Open Sans', sans-serif;
+color:black;
+}
+body .pbBody table.list tr td {
+color: #000;
+font-size: 0.85em;
+}
+.labelCol{font-size: 1.1em !important;}
+.table th, .table td{padding: 2px !important;font-size: 0.9em !important;vertical-align: baseline !important;line-height:17px !important;}
+form{margin:0 0 1px !important; }
+.btn{
+background:rgb(32, 123, 150)!important;
+background-image: none !important;
+border: none !important;
+color: #fff !important;
+font-family: 'Open Sans', sans-serif !important;
+font-size: 1em !important;
+font-weight:normal!important;
+
+}
+</style>
+   <style>
+      .activeTab {color:white;background:rgb(49,43,103);  background-image:none;font-family: 'Open Sans', sans-serif;}
+        
+      .inactiveTab {background-color: rgb(178, 76, 76);
+color: whitesmoke;background-image:none;font-family: 'Open Sans', sans-serif;}
+         
+   </style>
+   
+   <Style>
+   .leadTab .primaryPalette, .individualPalette .leadBlock .primaryPalette {
+background-color:rgb(49,43,103);
+border-color: #DA8610;
+}
+
+.leadTab .brdPalette {
+border-top-color:rgb(49,43,103);
+}
+   </style>
+
+   <apex:tabPanel switchType="client" selectedTab="tabdetails" id="LeadTabPanel" tabClass="activeTab"  inactiveTabClass="inactiveTab">  
+                  
+                  
+      <apex:tab label="Details" name="AccDetails" id="tabdetails">
+         <apex:detail relatedList="false" title="true"/>
+        
+              </apex:tab>
+            
+     <apex:tab label="Lead Contacts" name="Lead_Contact__c" id="Lead_Contacts1__r">
+
+         <apex:relatedlist subject="{!Lead}" list="Lead_Contacts__r">
+
+      </apex:relatedlist></apex:tab>
+
+      <apex:tab label="Open Activities" name="OpenActivities"  id="tabOpenAct">
+         <apex:relatedList subject="{!Lead}" list="OpenActivities" />
+      </apex:tab>
+      
+      <apex:tab label="Activity History" name="ActivityHistories"  id="tabActHist">
+         <apex:relatedList subject="{!Lead}" list="ActivityHistories" />
+      </apex:tab>
+
+      <apex:tab label="Notes and Attachments"  name="NotesAndAttachments" id="tabNoteAtt">
+         <apex:relatedList subject="{!Lead}" list="CombinedAttachments" />
+      </apex:tab>
+
+   </apex:tabPanel>
+   <style>
+   .leadTab .tertiaryPalette, .individualPalette .leadBlock .tertiaryPalette, .layoutEdit .individualPalette .leadBlock .tertiaryPalette {
+background-color:rgb(49,43,103);
+border-color: #FA002F;
+}
+
+
+.leadTab .secondaryPalette, .individualPalette .leadBlock .secondaryPalette {
+background-color: #e39321;
+border-color:rgb(49,43,103);
+}
+   </style>
+
+                   
+  
+</apex:page>

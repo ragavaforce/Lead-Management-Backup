@@ -1,0 +1,265 @@
+<apex:page standardController="lead" extensions="Lead_auto_complete_page_new232" recordSetVar="lead" sidebar="false">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+<!-----------------------Autocomplete-------------------------------------->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ <script>
+ $.noConflict();
+ jQuery(document).ready(function(){
+ jQuery.extend(jQuery.expr[":"], {
+"containsIN": function(elem, i, match, array) {
+return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+}
+});
+ 
+ 
+ jQuery(document).on("keyup",".search",function(){
+
+
+  var searchterm = jQuery(this).val();
+
+  if(searchterm.length > 0) {
+var lmatch=jQuery('.list tbody tr').text();
+//alert( jQuery('.list tbody tr td .ratingdata:containsIN("' + searchterm + '")').text());
+
+   var match = jQuery('.list tbody tr td .ratingdata:containsIN("' + searchterm + '")');
+
+   var nomatch = jQuery('.list tbody tr .ratingdata:not(:containsIN("' + searchterm + '"))').parent();
+   
+
+   match.addClass('selected');
+
+   nomatch.css("display", "none");
+
+  } else {
+
+   jQuery('.list tbody tr').css("display", "");
+
+   jQuery('.list tbody tr').removeClass('selected');
+
+  }
+
+});
+
+});
+ 
+</script>
+
+<style>
+.cselected
+{
+background:red;
+}
+.hselected
+{
+display:none;
+}
+body .bPageBlock .pbBody .labelCol{
+text-align: left;
+}
+body,td{
+font-family: 'Open Sans', sans-serif;
+color:black;
+}
+body .pbBody table.list tr td {
+color: #000;
+font-size: 1.1em;
+}
+.serchfld
+{
+width: 550px;
+border-radius: 8px;
+height: 20px;
+border: 1px solid #BBB6B6;
+margin-bottom: 10px;
+background-image: url(https://c.ap1.visual.force.com/resource/1418208486000/srch);
+background-repeat: no-repeat;
+background-position: 270px -1px;
+}
+</style>
+
+
+  <apex:form >
+  
+  <br/>
+       <span style="font-size: 1.2em;margin: 0 1% 0 1%;"> Lead Details:</span>
+       
+       <apex:inputtext value="{!rec}" styleClass="search serchfld" style="width:300px;" html-placeholder="Search"/>
+      <!-- <apex:CommandButton value="Search" action="{!searchcon}" style="color: Green; margin: 0 0 0 4.8px;"/> -->
+     
+        
+        <head>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8"/>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  <body>
+   <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+ Create New Lead1
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" >New Lead Form</h4>
+      </div>
+      <div class="modal-body">
+    
+       <apex:pageBlock title="New Lead">
+            
+            
+            <apex:pageBlockSection >
+         
+   <!--   <apex:pageBlockSection title="Information" > -->
+          
+          <apex:inputField value="{!newLead .FirstName}" />
+          <apex:inputField value="{!newLead .LastName}" />
+          <apex:inputField value="{!newLead .Company}" required="true"/>
+          <apex:inputField value="{!newLead .Industry}"/>
+        
+           <apex:inputField value="{!newLead .Phone}"/>   
+              
+              <apex:inputField value="{!newLead .Website}"/>
+              <apex:inputField value="{!newLead .country__c}"/>
+              
+              <apex:inputField value="{!newLead .Region__c}"/>
+              <apex:inputField value="{!newLead .Rating}"/>
+              <apex:inputField value="{!newLead .Status}" / >
+              <apex:inputField value="{!newLead .Email}"/>
+              <apex:inputField value="{!newLead .LinkedinLink__c}"/>
+              <apex:inputField value="{!newLead .Company_Address__c}"/>
+              <apex:inputField value="{!newLead .City__c}"/>
+              
+          
+              
+   <!--   </apex:pageBlockSection> -->
+             
+            </apex:pageBlockSection>
+            </apex:pageBlock>
+       
+      </div>
+      <div class="modal-footer">
+      
+       <apex:commandButton value="Save" action="{!saveRecord}" style="color: white;background:rgb(49,43,103);text-decoration: none;text-shadow: none;font-weight: initial;border-radius: 8%;padding: 0.5% 1% 0.5% 1%;font-family: 'Open Sans', sans-serif;"/>
+           <!-- <apex:commandButton value="Cancel" action="{!closePopup}" rerender="tstpopup" immediate="true" style="color: white;background:rgb(49,43,103);text-decoration: none;text-shadow: none;font-weight: initial;border-radius: 8%;padding: 0.5% 1% 0.5% 1%;font-family: 'Open Sans', sans-serif;"/>
+                -->
+      
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+  </body>
+     
+        <!-----------------------------Popup ------------------------------->
+     <!-- <apex:commandButton value="Create New Lead" action="{!showPopup}" rerender="tstpopup" style="margin: 0 0 0 5%;
+color: white;background:rgb(49,43,103);text-decoration: none;text-shadow: none;font-weight: initial;border-radius: 8%;padding: 0.5% 1% 0.5% 1%;font-family: 'Open Sans', sans-serif;"/>
+        <apex:outputPanel id="tstpopup">
+        <style>
+        body .bPageBlock .pbBody .pbSubheader {
+border-width: 2px 0 0;
+border-style: solid;
+color: #27282e;
+padding: 4px 3px;
+background-color: rgb(0, 136, 204);
+}
+        </style>
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}" >
+            
+            
+                 <center> <apex:commandButton value="Save" action="{!saveRecord}" style="color: white;background:rgb(49,43,103);text-decoration: none;text-shadow: none;font-weight: initial;border-radius: 8%;padding: 0.5% 1% 0.5% 1%;font-family: 'Open Sans', sans-serif;"/>
+            <apex:commandButton value="Cancel" action="{!closePopup}" rerender="tstpopup" immediate="true" style="color: white;background:rgb(49,43,103);text-decoration: none;text-shadow: none;font-weight: initial;border-radius: 8%;padding: 0.5% 1% 0.5% 1%;font-family: 'Open Sans', sans-serif;"/></center>
+                <!--<input type="button" class="leadBlock"/>
+                
+            </apex:outputPanel>
+        </apex:outputPanel> ---------------------------->
+       
+        <!---------------------------css for Popup------------------------------------->
+        <!---------- <style type="text/css">
+         .btnDisabled{background:#7f7f7f !important;color:#fff !important;}
+         .btn{
+color: white !important;
+background: rgb(49,43,103) !important;
+text-decoration: none;
+text-shadow: none;
+font-weight: initial;
+border-radius: 8%;
+padding: 0.5% 1% 0.5% 1%;
+font-family: 'Open Sans', sans-serif;}
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 35%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/
+            width: 50%;
+            margin-left: -200px;
+            top:70px;
+        }
+        .popupBackground{
+          background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQIKv5BycnpdqF7Zv6zEKc7Hfpi-jZVBH-YEg708wNuds0GeuWR7YzlDfpI");
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+            position: fixed;
+        }
+
+    </style>------------------------->
+        <!------------------------------------Lead List Details ------------------------------->
+   <apex:outputPanel id="op">
+   
+   <apex:pageBlock id="pb">
+            <apex:pageBlockTable value="{!leads}" var="a">
+                <apex:column >
+            <apex:commandLink action="/{!a.id}/d"> <img src="https://c.cs5.content.force.com/servlet/servlet.ImageServer?id=015O0000000BDgQ&oid=00DO00000050hS1&lastMod=1418989254000" style="width: 31px;" title="Click here for viewing the lead detail page"/></apex:commandlink>
+            </apex:column>
+                <apex:column value="{!a.Company}" style="padding: 0 0 0 1%;"/>
+                 <apex:column value="{!a.name}"/>
+                 <apex:column value="{!a.Phone}"/>
+                  <apex:column value="{!a.Title}"/>
+                   <apex:column value="{!a.Email}"/>
+                   <apex:column value="{!a.Country__c}"/>
+                   <apex:column value="{!a.Website}"/>
+                            <apex:column value="{!a.Rating}" styleClass="ratingdata"/>
+                             <apex:column value="{!a.createddate}"/>
+                <apex:column value="{!a.ownerid}"/>
+            </apex:pageBlockTable>
+         <center>   <apex:panelGrid columns="7">
+                <apex:commandButton status="fetchStatus" reRender="pb" value="First" action="{!first}" disabled="{!!hasPrevious}" title="First Page"/>
+                <apex:commandButton status="fetchStatus" reRender="pb" value="Previous" action="{!previous}" disabled="{!!hasPrevious}" title="Previous Page"/>
+                <apex:commandButton status="fetchStatus" reRender="pb" value="Next" action="{!next}" disabled="{!!hasNext}" title="Next Page" />
+                <apex:commandButton status="fetchStatus" reRender="pb" value="Last" action="{!last}" disabled="{!!hasNext}" title="Last Page"/>
+                <apex:outputText >{!(pageNumber * size)+1-size}-{!IF((pageNumber * size)>noOfRecords, noOfRecords,(pageNumber * size))} of {!noOfRecords}</apex:outputText>
+               <!-- <apex:commandButton status="fetchStatus" reRender="pb" value="Refresh" action="{!refresh}" title="Refresh Page"/> -->
+               
+                <apex:outputPanel style="color:#4AA02C;font-weight:bold">
+                    <apex:actionStatus id="fetchStatus" startText="Fetching..." stopText=""/>
+                </apex:outputPanel>
+            </apex:panelGrid> </center>
+           
+        </apex:pageBlock>
+   
+</apex:outputPanel>
+    </apex:form>
+    
+</apex:page>

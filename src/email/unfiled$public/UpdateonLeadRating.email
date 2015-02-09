@@ -1,0 +1,19 @@
+Dear All, <br/><br/>
+
+You have a new {!Lead.Rating} lead! Please take a look at the details below and kindly follow-up.<br/><br/>
+
+Please find the lead information :<br/><br/>
+
+Name: {!Lead.Name}<br/><br/>
+
+Phone: {!Lead.Phone}<br/><br/>
+
+Email: {!Lead.Email}<br/><br/>
+
+Company: {!Lead.Company}<br/><br/>
+
+You can click on the link below for more information: <br/><br/>
+
+https://c.ap1.visual.force.com/apex/LeadmanagementDetailpage?id=00Q9000000cCrv4EAC&sfdc.override=1<br/><br/>
+
+Thank You<br/>
